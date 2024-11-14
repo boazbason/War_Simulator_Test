@@ -38,7 +38,7 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
         resources: [{
             missile: {
                 type: Schema.Types.ObjectId,
-                ref: "Missile",
+                ref: "Missiles",
             },
             amount: {
                 type: Number,
