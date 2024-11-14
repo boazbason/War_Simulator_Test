@@ -1,7 +1,8 @@
 import { compose, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUser } from '../types/types'
+import { IMission, IUser } from '../types/types'
 import axios from 'axios'
 import { StartSocket } from '../socketManeger'
+import { useNavigate } from 'react-router-dom'
 
 const Url = "http://localhost:3000/api"
 
@@ -17,11 +18,14 @@ const initialState: UserStateType = {
     user: null
 }
 
+
+
 export const loginUser = createAsyncThunk(
     
     "login/User",
     async (user: IUser, thunkAPI) => {
         try {
+            
             const response = await axios.post(`${Url}/login`, {
                 user
             });
@@ -59,6 +63,18 @@ export const userSlice = createSlice({
     initialState,
     name: 'userSlice',
     reducers: {
+        updateMission: (state, action: PayloadAction<IMission>) => {
+            setInterval(() => {
+                console.log(state.user?.locassionMissiles);
+                 
+            }, 1000);
+            
+            if(!state.user?.locassionMissiles){
+                state.user!.locassionMissiles = [];
+            }
+            state.user?.locassionMissiles?.push(action.payload) 
+        }
+        
     },
     extraReducers: (builder) => {
         builder.addCase(loginUser.pending, (state) => {
@@ -73,13 +89,12 @@ export const userSlice = createSlice({
             state.status = "success";
             
             state.user = action.payload.ResUser
-            console.log(state.user);
+            
             
         });
         builder.addCase(loginUser.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message!
-            console.log(" from state",action.error.message);
             
         });
         builder.addCase(registerUser.pending, (state) => {
@@ -91,6 +106,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { } = userSlice.actions
+export const { updateMission} = userSlice.actions
+
 
 export default userSlice.reducer

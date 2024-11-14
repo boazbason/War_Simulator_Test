@@ -12,12 +12,7 @@ function useForm(initialValues: IUser) {
       [name]: value,
     }));
   };
-//   const handleSubmit = (e: React.FormEvent) => {
-//     // e.preventDefault();
-//     // if(!formData.username || !formData.password) return
-    
-    
-//   };
+
   return { formData, handleChange };
 }
 export { useForm };

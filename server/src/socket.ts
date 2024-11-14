@@ -20,7 +20,7 @@ export const StartSocket = () => {
 
         io.on('connection', (socket) => {
 
-            socket.on("StartAttack", async ({ missile, username }) => {
+            socket.on("StartAttack", async ({ missile, username , location}) => {
                 try {
                     //console.log(missile, username);
                     //למצוא את היוזר ולהוריד לו את הטיל מרשימת הטילים
@@ -29,7 +29,6 @@ export const StartSocket = () => {
                         
                         
                         if (resource.missile?._id.toString() === missile && resource.amount > 0) {
-                            console.log("in if");
                             
                             resource.amount -= 1;
                             userFound.save();
@@ -45,7 +44,7 @@ export const StartSocket = () => {
                             name: missileFound.name,
                             id: missileFound._id.toString(),
                             status: "onAir",
-                            location: "Theater",
+                            location: location,
                         }
                         ActiveMissile.create(activeMissile);
                         //שליחת הודעה שמכילה את הטיל השניות והמיקום, את היוזר ורשימת הטילים המעודכנת שלו

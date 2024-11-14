@@ -8,6 +8,7 @@ export interface IUser {
         amount: number;
     }[];
     budget?: number;
+    locassionMissiles?: IMission[]  
 }
 export interface IMission {
     _id?: string;
